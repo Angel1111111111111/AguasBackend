@@ -107,9 +107,7 @@ public class AccountController : ControllerBase
             return BadRequest("User not found");
         }
 
-        var frontendUrl = _configuration["FrontendURL"];
-        var callbackUrl = $"{frontendUrl}/account/reset-password?email={model.Email}&token={token}";
-        await _emailService.SendEmailAsync(model.Email, "Reset Password", $"Reset your password by clicking <a href='{callbackUrl}'>here</a>");
+        await _emailService.SendEmailAsync(model.Email, "Reset Password", $"Your password reset token is: {token}");
 
         return Ok(new { Result = "Password reset token sent" });
     }
@@ -122,14 +120,26 @@ public class AccountController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var result = await _userService.ResetPasswordAsync(model);
-
-        if (result.Succeeded)
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null || user.PasswordResetToken != model.Token || user.PasswordResetTokenExpires < DateTime.UtcNow)
         {
-            return Ok(new { Result = "Password reset successfully" });
+            return BadRequest(new { code = "InvalidToken", description = "Invalid or expired token." });
         }
 
-        return BadRequest(result.Errors);
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user); // Generar token para usar con Identity
+        var resetPassResult = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
+
+        if (!resetPassResult.Succeeded)
+        {
+            return BadRequest(resetPassResult.Errors);
+        }
+
+        // Limpiar el token y la fecha de expiración
+        user.PasswordResetToken = null;
+        user.PasswordResetTokenExpires = null;
+        await _userManager.UpdateAsync(user);
+
+        return Ok(new { Result = "Password has been reset" });
     }
 
     [HttpGet("me")]

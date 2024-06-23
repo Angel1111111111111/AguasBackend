@@ -247,3 +247,4 @@ C:\Users\angel\Documents\ClasesUnah\SistemasInformacion\AguasBackend\LOGIN\LOGIN
 C:\Users\angel\Documents\ClasesUnah\SistemasInformacion\AguasBackend\LOGIN\LOGIN\obj\Debug\net8.0\LOGIN.genruntimeconfig.cache
 C:\Users\angel\Documents\ClasesUnah\SistemasInformacion\AguasBackend\LOGIN\LOGIN\obj\Debug\net8.0\ref\LOGIN.dll
 C:\Users\angel\Documents\ClasesUnah\SistemasInformacion\AguasBackend\LOGIN\LOGIN\bin\Debug\net8.0\libman.json
+C:\Users\angel\Documents\ClasesUnah\SistemasInformacion\AguasBackend\LOGIN\LOGIN\obj\Debug\net8.0\LOGIN.sourcelink.json

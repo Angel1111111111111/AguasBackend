@@ -1,4 +1,5 @@
-﻿using LOGIN.Entities;
+﻿using LOGIN.Dtos.Communicates;
+using LOGIN.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -55,4 +56,7 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity, IdentityRole, 
 
     // DbSet para userEntity si se necesita acceder directamente desde el contexto
     public DbSet<UserEntity> Users { get; set; }
+    public DbSet<CommunicateEntity> Communicates { get; set; }
+    public DbSet<StateEntity> States { get; set; }
+    public DbSet<ReportEntity> Reports { get; set; }
 }

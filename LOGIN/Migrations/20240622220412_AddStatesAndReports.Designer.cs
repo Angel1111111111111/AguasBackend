@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LOGIN.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240622220412_AddStatesAndReports")]
+    partial class AddStatesAndReports
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,22 +85,16 @@ namespace LOGIN.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Observation")
+                    b.Property<string>("Observztion")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Photo")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Report")
+                    b.Property<string>("Reporrt")
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("StateId")
-                        .HasColumnType("char(36)")
-                        .HasColumnName("state_id");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("StateId");
 
                     b.ToTable("report", "reports");
                 });
@@ -169,12 +166,6 @@ namespace LOGIN.Migrations
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext");
-
-                    b.Property<string>("PasswordResetToken")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("PasswordResetTokenExpires")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("longtext");
@@ -344,17 +335,6 @@ namespace LOGIN.Migrations
                         .HasForeignKey("User_Id");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("LOGIN.Entities.ReportEntity", b =>
-                {
-                    b.HasOne("LOGIN.Entities.StateEntity", "State")
-                        .WithMany()
-                        .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("State");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

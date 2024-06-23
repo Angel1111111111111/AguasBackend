@@ -16,7 +16,7 @@ public class EmailService : IEmailService
         _logger = logger;
     }
 
-    public async Task SendEmailAsync(string to, string subject, string body)
+    public async Task SendEmailAsync(string to, string subject, string token)
     {
         try
         {
@@ -40,6 +40,8 @@ public class EmailService : IEmailService
                 Credentials = new NetworkCredential(smtpUsername, smtpPassword)
             })
             {
+                var body = $"Your password reset token is: {token}";
+
                 var mailMessage = new MailMessage
                 {
                     From = new MailAddress(smtpUsername),
@@ -60,4 +62,5 @@ public class EmailService : IEmailService
             throw;
         }
     }
+
 }

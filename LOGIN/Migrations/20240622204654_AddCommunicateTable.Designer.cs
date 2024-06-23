@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LOGIN.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240622204654_AddCommunicateTable")]
+    partial class AddCommunicateTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,64 +59,6 @@ namespace LOGIN.Migrations
                     b.HasIndex("User_Id");
 
                     b.ToTable("communicate", "post");
-                });
-
-            modelBuilder.Entity("LOGIN.Entities.ReportEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Cellphone")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("DNI")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Direction")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Key")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Observation")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Photo")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Report")
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("StateId")
-                        .HasColumnType("char(36)")
-                        .HasColumnName("state_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StateId");
-
-                    b.ToTable("report", "reports");
-                });
-
-            modelBuilder.Entity("LOGIN.Entities.StateEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("state", "reports");
                 });
 
             modelBuilder.Entity("LOGIN.Entities.UserEntity", b =>
@@ -169,12 +114,6 @@ namespace LOGIN.Migrations
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext");
-
-                    b.Property<string>("PasswordResetToken")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("PasswordResetTokenExpires")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("longtext");
@@ -344,17 +283,6 @@ namespace LOGIN.Migrations
                         .HasForeignKey("User_Id");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("LOGIN.Entities.ReportEntity", b =>
-                {
-                    b.HasOne("LOGIN.Entities.StateEntity", "State")
-                        .WithMany()
-                        .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("State");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

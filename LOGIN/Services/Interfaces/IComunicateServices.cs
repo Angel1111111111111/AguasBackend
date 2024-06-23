@@ -1,0 +1,13 @@
+﻿using LOGIN.Dtos;
+using LOGIN.Dtos.Communicates;
+
+namespace LOGIN.Services.Interfaces
+{
+    public interface IComunicateServices
+    {
+        Task<ResponseDto<CommunicateDto>> CreateCommunicate(CreateCommunicateDto model);
+        Task<ResponseDto<CommunicateDto>> DeleteCommunicate(Guid id);
+        Task<ResponseDto<List<CommunicateDto>>> GetAllCommunicates();
+        Task<ResponseDto<CommunicateDto>> UpdateCommunicate(CommunicateDto model);
+    }
+}

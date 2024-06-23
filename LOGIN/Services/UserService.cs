@@ -163,8 +163,17 @@ public class UserService : IUserService
             return null;
         }
 
-        return await _userManager.GeneratePasswordResetTokenAsync(user);
+        // Generar un código numérico aleatorio de 8 dígitos
+        var token = new Random().Next(10000000, 99999999).ToString();
+
+        // Guardar el token y la fecha de expiración en la base de datos
+        user.PasswordResetToken = token;
+        user.PasswordResetTokenExpires = DateTime.UtcNow.AddMinutes(15); // El token expira en 15 minutos
+        await _userManager.UpdateAsync(user);
+
+        return token;
     }
+
 
     public async Task<IdentityResult> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
     {
@@ -176,6 +185,7 @@ public class UserService : IUserService
 
         return await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.NewPassword);
     }
+
 
     public async Task<bool> CheckEmailExistsAsync(string email)
     {

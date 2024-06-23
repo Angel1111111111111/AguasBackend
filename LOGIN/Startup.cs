@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using LOGIN.Services;
 
 namespace LOGIN
 {
@@ -37,6 +38,7 @@ namespace LOGIN
             // Add custom services
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IComunicateServices, ComunicateServices>();
 
             // Add AutoMapper service
             services.AddAutoMapper(typeof(Startup));
@@ -77,7 +79,9 @@ namespace LOGIN
                     builder.WithOrigins(Configuration["FrontendURL"])
                            .AllowAnyHeader()
                            .AllowAnyMethod()
-                           .AllowCredentials();
+                           .AllowCredentials()
+                           .SetIsOriginAllowedToAllowWildcardSubdomains()
+                           .WithExposedHeaders("Content-Disposition");
                 });
             });
 

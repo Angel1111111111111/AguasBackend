@@ -22,5 +22,8 @@ namespace LOGIN.Entities
         [Column(TypeName = "datetime")]
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
+        public string PasswordResetToken { get; set; }
+        public DateTime? PasswordResetTokenExpires { get; set; }
+
     }
 }
